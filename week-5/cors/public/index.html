@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.6/axios.min.js"></script>
+    <script>
+      let x, y;
+
+      function getData() {
+        x = document.getElementById("first").value;
+        y = document.getElementById("second").value;
+      }
+
+      function sendSumRequest() {
+        getData();
+        axios
+          .post("http://localhost:3000/sum", {
+            a: x,
+            b: y,
+          })
+          .then(function (response) {
+            document.getElementById("ans").innerHTML =
+              "sum : " + response.data.ans;
+          })
+          .catch(function (error) {
+            console.error("There was an error!", error);
+          });
+      }
+
+      function sendMultiplyRequest() {
+        getData();
+        axios
+          .post("http://localhost:3000/multiply", {
+            a: x,
+            b: y,
+          })
+          .then(function (response) {
+            document.getElementById("ans").innerHTML =
+              "Multiplication : " + response.data.ans;
+          })
+          .catch(function (error) {
+            console.error("There was an error!", error);
+          });
+      }
+
+      function sendDivisionRequest() {
+        getData();
+        axios
+          .post("http://localhost:3000/divide", {
+            a: x,
+            b: y,
+          })
+          .then(function (response) {
+            document.getElementById("ans").innerHTML =
+              "Division : " + response.data.ans;
+          })
+          .catch(function (error) {
+            console.error("There was an error!", error);
+          });
+      }
+
+      function sendSubtractionRequest() {
+        getData();
+        axios
+          .post("http://localhost:3000/subtract", {
+            a: x,
+            b: y,
+          })
+          .then(function (response) {
+            document.getElementById("ans").innerHTML =
+              "Subtraction: " + response.data.ans;
+          })
+          .catch(function (error) {
+            console.error("There was an error!", error);
+          });
+      }
+    </script>
+    <title>Calculator</title>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Simple Calculator</h2>
+      <input type="text" id="first" placeholder="Enter first number" />
+      <input type="text" id="second" placeholder="Enter second number" />
+      <br />
+      <button onclick="sendSumRequest()">Sum</button>
+      <button onclick="sendMultiplyRequest()">Multiply</button>
+      <button onclick="sendDivisionRequest()">Divide</button>
+      <button onclick="sendSubtractionRequest()">Subtract</button>
+      <div id="ans"></div>
+    </div>
+  </body>
+</html>

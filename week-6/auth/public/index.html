@@ -1,0 +1,321 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auth Website</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.7/axios.min.js"></script>
+    <script>
+        async function signup() {
+            const username = document.getElementById("signup-us").value;
+            const password = document.getElementById("signup-pa").value;
+
+            await axios.post("http://localhost:3000/signup", {
+                username: username,
+                password: password
+            });
+
+            alert("You are signed up");
+        }
+
+        async function signin() {
+            const username = document.getElementById("signin-us").value;
+            const password = document.getElementById("signin-pa").value;
+
+            const response = await axios.post("http://localhost:3000/signin", {
+                username: username,
+                password: password
+            });
+
+            localStorage.setItem("token", response.data.authToken);
+
+            alert("You are signed in");
+            renderContent();
+        }
+
+        async function logout() {
+            localStorage.removeItem("token");
+            alert("You are logged out");
+            renderContent();
+        }
+
+        async function getUserInformation() {
+            const response = await axios.get("http://localhost:3000/me", {
+                headers: {
+                    token: localStorage.getItem("token")
+                }
+            });
+
+            document.getElementById("information").innerHTML = "Username: " + response.data.username + " Password: " + response.data.password;
+        }
+
+        function renderContent() {
+            const token = localStorage.getItem("token");
+
+            if (token) {
+                // User is logged in, show logout button and user info
+                document.getElementById("auth-forms").style.display = "none";
+                document.getElementById("logout-section").style.display = "block";
+                getUserInformation();
+            } else {
+                // User is not logged in, show sign-in/sign-up forms
+                document.getElementById("auth-forms").style.display = "block";
+                document.getElementById("logout-section").style.display = "none";
+            }
+        }
+
+        window.onload = renderContent; // Call when the page loads
+    </script>
+</head>
+<body>
+    <div id="auth-forms">
+        <div>
+            <h3>Signup</h3>
+            <input id="signup-us" type="text" name="username" placeholder="Username">
+            <input id="signup-pa" type="password" name="password" placeholder="Password">
+            <button class="btn" onclick="signup()">Submit</button>
+        </div>
+        <div>
+            <h3>Signin</h3>
+            <input id="signin-us" type="text" name="username" placeholder="Username">
+            <input id="signin-pa" type="password" name="password" placeholder="Password">
+            <button class="btn" onclick="signin()">Submit</button>
+        </div>
+    </div>
+
+    <div id="logout-section" style="display: none;">
+        <div>
+            <h3>User Information</h3>
+            <div id="information"></div>
+        </div>
+        <button id="lg" onclick="logout()">Logout</button>
+    </div>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auth Website</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            background-color: #f0f0f0;
+            cursor: pointer;
+            border: none;
+            outline: none;
+        }
+        .tab.active {
+            color: #333;
+            background-color: white;
+            border-bottom: 2px solid #007bff;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #666;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .message {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 4px;
+            text-align: center;
+        }
+        .error {
+            background-color: #ffebee;
+            color: #c62828;
+        }
+        .success {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+        #user-info {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Authentication</h1>
+        <div id="auth-forms">
+            <div class="tabs">
+                <button class="tab active" onclick="showTab('signin')">Sign In</button>
+                <button class="tab" onclick="showTab('signup')">Sign Up</button>
+            </div>
+            <div id="signin" class="tab-content active">
+                <form onsubmit="return handleSubmit(event, 'signin')">
+                    <div class="form-group">
+                        <label for="signin-username">Username</label>
+                        <input id="signin-username" type="text" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signin-password">Password</label>
+                        <input id="signin-password" type="password" name="password" required>
+                    </div>
+                    <button type="submit">Sign In</button>
+                </form>
+            </div>
+            <div id="signup" class="tab-content">
+                <form onsubmit="return handleSubmit(event, 'signup')">
+                    <div class="form-group">
+                        <label for="signup-username">Username</label>
+                        <input id="signup-username" type="text" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-password">Password</label>
+                        <input id="signup-password" type="password" name="password" required>
+                    </div>
+                    <button type="submit">Sign Up</button>
+                </form>
+            </div>
+        </div>
+        <div id="user-info" style="display: none;">
+            <h2>Welcome, <span id="username"></span>!</h2>
+            <p>You are currently logged in.</p>
+            <div id="user-details"></div>
+            <button onclick="logout()">Logout</button>
+        </div>
+        <div id="message" class="message" style="display: none;"></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.7/axios.min.js"></script>
+    <script>
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+            document.querySelector(`.tab:nth-child(${tabName === 'signin' ? '1' : '2'})`).classList.add('active');
+        }
+
+        function showMessage(text, type) {
+            const messageEl = document.getElementById('message');
+            messageEl.textContent = text;
+            messageEl.className = `message ${type}`;
+            messageEl.style.display = 'block';
+            setTimeout(() => {
+                messageEl.style.display = 'none';
+            }, 3000);
+        }
+
+        async function handleSubmit(event, action) {
+            event.preventDefault();
+            const form = event.target;
+            const username = form.elements.username.value;
+            const password = form.elements.password.value;
+
+            try {
+                if (action === 'signup') {
+                    await axios.post("http://localhost:3000/signup", { username, password });
+                    showMessage("You are signed up successfully!", "success");
+                } else {
+                    const response = await axios.post("http://localhost:3000/signin", { username, password });
+                    localStorage.setItem("token", response.data.authToken);
+                    showMessage("You are signed in successfully!", "success");
+                    renderUserInfo();
+                }
+            } catch (error) {
+                showMessage("An error occurred. Please try again.", "error");
+            }
+
+            return false;
+        }
+
+        async function getUserInformation() {
+            try {
+                const response = await axios.get("http://localhost:3000/me", {
+                    headers: {
+                        token: localStorage.getItem("token")
+                    }
+                });
+                return response.data;
+            } catch (error) {
+                showMessage("Failed to fetch user information", "error");
+                return null;
+            }
+        }
+
+        async function renderUserInfo() {
+            const userInfo = await getUserInformation();
+            if (userInfo) {
+                document.getElementById('auth-forms').style.display = 'none';
+                document.getElementById('user-info').style.display = 'block';
+                document.getElementById('username').textContent = userInfo.username;
+                document.getElementById('user-details').innerHTML = `
+                    <p><strong>Username:</strong> ${userInfo.username}</p>
+                    <p><strong>Password:</strong> ${'•'.repeat(8)}</p>
+                `;
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem("token");
+            document.getElementById('auth-forms').style.display = 'block';
+            document.getElementById('user-info').style.display = 'none';
+            showMessage("You have been logged out successfully!", "success");
+        }
+
+        window.onload = function() {
+            if (localStorage.getItem("token")) {
+                renderUserInfo();
+            }
+        };
+    </script>
+</body>
+</html>
