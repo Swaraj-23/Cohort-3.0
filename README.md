@@ -1,6 +1,6 @@
 # Cohort 3.0 Web Development and DevOps
 
-This repository contains all the code and projects for the **Cohort 3.0** course by [Harkirat Singh](https://www.youtube.com/@HarkiratSingh). The course covers comprehensive topics in both **Web Development** and **DevOps**, aiming to provide hands-on experience and a strong foundational understanding.
+This repository contains all the code and projects for the **Cohort 3.0** course by [Harkirat Singh](https://www.youtube.com/@harkirat1). The course covers comprehensive topics in both **Web Development** and **DevOps**, aiming to provide hands-on experience and a strong foundational understanding.
 
 ## Table of Contents
 
@@ -43,7 +43,7 @@ This repository contains all the code and projects for the **Cohort 3.0** course
 ## How to Use This Repository
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/cohort-3.0.git
+   git clone https://github.com/Swaraj-23/Cohort-3.0
    ```
 2. Navigate to the desired topic directory to explore the code and examples.
 3. Follow along with the course videos to understand the implementation.
