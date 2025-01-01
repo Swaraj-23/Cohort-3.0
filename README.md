@@ -5,14 +5,14 @@ This repository contains all the code and projects for the **Cohort 3.0** course
 ## Table of Contents
 
 ### Web Development
-1. **Foundations**
-2. **Simple Frontend, DOM Manipulation**
-3. **Node.js/Bun/Cloudflare Runtime** - Exploring various JavaScript runtimes
-4. **HTTP Servers**
-5. **NoSQL Databases**
+1. **Foundations**✅
+2. **Simple Frontend, DOM Manipulation**✅
+3. **Node.js/Bun/Cloudflare Runtime** - Exploring various JavaScript runtimes✅
+4. **HTTP Servers**✅
+5. **NoSQL Databases**✅
 6. **SQL Databases**
 7. **ORMs**
-8. **React**
+8. **React**✅
     - Basics of React
     - Styling React Apps
 9. **TypeScript**
