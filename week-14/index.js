@@ -38,3 +38,25 @@ const teamLead = {
     department: "Software developer"
 };
 getDetails(teamLead);
+class employees {
+    constructor(name) {
+        this.name = name;
+    }
+    greet() {
+        return "hi" + this.name;
+    }
+}
+const e = new employees(" abc");
+console.log(e.greet());
+function filteredUsers(users) {
+    return users.filter(x => x.age >= 18);
+}
+console.log(filteredUsers([{
+        firstName: "harkirat",
+        lastName: "Singh",
+        age: 21
+    }, {
+        firstName: "Raman",
+        lastName: "Singh",
+        age: 16
+    },]));

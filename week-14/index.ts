@@ -38,7 +38,7 @@ greet(user)
 interface studyType {
     name : string,
     class : string,
-    roll : number
+    roll ?: number // the roll field is optional now
 }
 
 function demo(study : studyType)
@@ -87,4 +87,43 @@ type Employee = {
   };
 
   getDetails(teamLead)
-  
+
+  interface person{
+    name : string,
+    greet() : string
+  }
+
+  class employees implements person{
+    constructor(public name:string){}
+
+    greet()
+    {
+        return "hi" + this.name
+    }
+  }
+
+ const e = new employees(" abc")
+ console.log(e.greet())
+ 
+
+ // arrays in ts
+
+ interface User {
+	firstName: string;
+	lastName: string;
+	age: number;
+}
+
+function filteredUsers(users: User[]) {
+    return users.filter(x => x.age >= 18);
+}
+
+console.log(filteredUsers([{
+    firstName: "harkirat",
+    lastName: "Singh",
+    age: 21
+}, {
+    firstName: "Raman",
+    lastName: "Singh",
+    age: 16
+}, ]));
